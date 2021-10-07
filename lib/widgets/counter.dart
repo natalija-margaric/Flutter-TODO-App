@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Counter extends StatelessWidget {
+  final int numberOfTodos;
+  final int totalCompletion;
+
+  Counter({required this.numberOfTodos, required this.totalCompletion});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Text(
-        "0/7",
+        "$totalCompletion/$numberOfTodos",
         style: TextStyle(
           fontSize: 75,
-          color: Colors.pink,
+          color: Colors.deepPurple,
         ),
       ),
     );

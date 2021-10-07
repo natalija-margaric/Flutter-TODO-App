@@ -27,17 +27,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Todo> todos = [
-    Todo(id: "1", title: "I'm a card one", completed: true),
+    Todo(id: "1", title: "I'm a card one", completed: false),
     Todo(id: "2", title: "I'm a card two", completed: false),
     Todo(id: "3", title: "I'm a card three", completed: true)
   ];
+
+  int totalCompletions() {
+    var total = 0;
+    todos.forEach((todo) {
+      if (todo.completed) {
+        total++;
+      }
+    });
+
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Counter(),
+          Counter(
+              numberOfTodos: todos.length, totalCompletion: totalCompletions()),
           ...todos.map((todo) => TodoCard(
                 title: todo.title,
                 completed: todo.completed,
