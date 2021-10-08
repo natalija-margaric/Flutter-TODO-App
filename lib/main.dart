@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/models/todo.dart';
 import 'package:flutter_todo_app/widgets/counter.dart';
 import 'package:flutter_todo_app/widgets/new_todo.dart';
-import 'package:flutter_todo_app/widgets/todo_cards.dart';
+import 'package:uuid/uuid.dart';
 import 'package:flutter_todo_app/widgets/todo_list.dart';
 
 void main() {
@@ -29,10 +29,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Todo> todos = [
-    Todo(id: "1", title: "I'm a card one", completed: false),
-    Todo(id: "2", title: "I'm a card two", completed: false),
-    Todo(id: "3", title: "I'm a card three", completed: true)
+    Todo(id: Uuid(), title: "I'm a card one", completed: false),
+    Todo(id: Uuid(), title: "I'm a card two", completed: false),
+    Todo(id: Uuid(), title: "I'm a card three", completed: true)
   ];
+
+  void _updateTodoCompletions(int index) {
+    setState(() {
+      todos[index].completed = !todos[index]
+          .completed; //this ! means it will flipped to the opposite if its true then false etc...
+    });
+  }
 
   _showAddTodoModal(BuildContext context) {
     showModalBottomSheet(
@@ -44,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addTodo(String todo) {
     setState(() {
-      todos.add(Todo(id: "123456", completed: false, title: todo));
+      todos.add(Todo(id: Uuid(), completed: false, title: todo));
     });
   }
 
@@ -67,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Counter(
               numberOfTodos: todos.length,
               totalCompletion: _totalCompletions()),
-          TodoList(todos: todos),
+          TodoList(todos: todos, updateTodoCompletions: _updateTodoCompletions),
         ]),
       ),
       floatingActionButton: FloatingActionButton(
