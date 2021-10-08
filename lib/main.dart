@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/models/todo.dart';
 import 'package:flutter_todo_app/widgets/counter.dart';
+import 'package:flutter_todo_app/widgets/new_todo.dart';
 import 'package:flutter_todo_app/widgets/todo_cards.dart';
 
 void main() {
@@ -32,7 +33,15 @@ class _MyHomePageState extends State<MyHomePage> {
     Todo(id: "3", title: "I'm a card three", completed: true)
   ];
 
-  int totalCompletions() {
+  void _showAddTodoModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (bCtx) {
+          return NewTodo();
+        });
+  }
+
+  int _totalCompletions() {
     var total = 0;
     todos.forEach((todo) {
       if (todo.completed) {
@@ -49,12 +58,22 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Counter(
-              numberOfTodos: todos.length, totalCompletion: totalCompletions()),
+              numberOfTodos: todos.length,
+              totalCompletion: _totalCompletions()),
           ...todos.map((todo) => TodoCard(
                 title: todo.title,
                 completed: todo.completed,
               ))
         ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddTodoModal(context);
+        },
+        backgroundColor: Colors.deepPurple,
+        child: Icon(
+          Icons.add,
+        ),
       ),
     );
   }
