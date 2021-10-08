@@ -3,6 +3,7 @@ import 'package:flutter_todo_app/models/todo.dart';
 import 'package:flutter_todo_app/widgets/counter.dart';
 import 'package:flutter_todo_app/widgets/new_todo.dart';
 import 'package:flutter_todo_app/widgets/todo_cards.dart';
+import 'package:flutter_todo_app/widgets/todo_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -66,10 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Counter(
               numberOfTodos: todos.length,
               totalCompletion: _totalCompletions()),
-          ...todos.map((todo) => TodoCard(
-                title: todo.title,
-                completed: todo.completed,
-              ))
+          TodoList(todos: todos),
         ]),
       ),
       floatingActionButton: FloatingActionButton(
