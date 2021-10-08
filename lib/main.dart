@@ -33,12 +33,18 @@ class _MyHomePageState extends State<MyHomePage> {
     Todo(id: "3", title: "I'm a card three", completed: true)
   ];
 
-  void _showAddTodoModal(BuildContext context) {
+  _showAddTodoModal(BuildContext context) {
     showModalBottomSheet(
         context: context,
         builder: (bCtx) {
-          return NewTodo();
+          return NewTodo(addTodo: _addTodo);
         });
+  }
+
+  void _addTodo(String todo) {
+    setState(() {
+      todos.add(Todo(id: "123456", completed: false, title: todo));
+    });
   }
 
   int _totalCompletions() {

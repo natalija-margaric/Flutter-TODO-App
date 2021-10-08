@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewTodo extends StatefulWidget {
+  final Function(String) addTodo;
+
+  NewTodo({required this.addTodo});
+
   @override
   _NewTodoState createState() => _NewTodoState();
 }
@@ -19,12 +23,13 @@ class _NewTodoState extends State<NewTodo> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TextField(
+            maxLength: 25,
             controller: _todoController,
             decoration: InputDecoration(labelText: "New Todo"),
           ),
           TextButton(
               onPressed: () {
-                print(_todoController.text);
+                widget.addTodo(_todoController.text);
               },
               child: Text("ADD"))
         ],
